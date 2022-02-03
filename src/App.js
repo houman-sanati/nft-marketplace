@@ -4,24 +4,29 @@ function App() {
   return (
     <>
       <div>
-        <nav className="border-b p-6">
-          <p className="text-4xl font-bold">Metaverse Marketplace</p>
-          <div className="flex mt-4">
-            <Link to="/">
-              Home
-            </Link>
-            <Link to="/create-item">
-              Sell Digital Asset
-            </Link>
-            <Link to="/my-assets">
-              My Digital Assets
-            </Link>
-            <Link to="/creator-dashboard">
-              Creator Dashboard
-            </Link>
+        <nav className="flex p-5 color-primary text-white items-center justify-between">
+          <div className='flex'>
+            <h2 className="text-xl font-bold">فروشگاه NFT</h2>
+            <div className="grid grid-flow-col gap-4 mr-10">
+              <Link to="/">
+                خانه
+              </Link>
+              <Link to="/create-item">
+                افزودن
+              </Link>
+              <Link to="/my-assets">
+                NFT های من
+              </Link>
+              <Link to="/creator-dashboard">
+                داشبورد
+              </Link>
+            </div>
+          </div>
+          <div>
+            <button type='button' className='border-2 p-2 rounded-full shadow-lg'>اتصال کیف پول</button>
           </div>
         </nav>
-        <Outlet/>
+        <Outlet />
       </div>
     </>
   );
