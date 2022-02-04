@@ -60,7 +60,7 @@ export default function CreateItem() {
         let listingPrice = await marketContractInstance.getListingPrice()
         listingPrice = listingPrice.toString()
 
-        transaction = await marketContractInstance.createMarketItem(appContext.nftaddress, tokenId, price, { value: listingPrice })
+        transaction = await marketContractInstance.createMarketItem(tokenId,appContext.nftaddress, price, { value: listingPrice })
         await transaction.wait()
         navigate('/')
     }
