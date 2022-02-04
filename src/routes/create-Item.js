@@ -62,7 +62,7 @@ export default function CreateItem() {
 
         transaction = await marketContractInstance.createMarketItem(tokenId,appContext.nftaddress, price, { value: listingPrice })
         await transaction.wait()
-        navigate('/')
+        navigate('/home')
     }
 
     return (
