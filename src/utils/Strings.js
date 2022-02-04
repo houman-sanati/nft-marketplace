@@ -9,5 +9,6 @@ export const Strings = Object.freeze({
     assetName: 'نام',
     description: 'توضیحات',
     price: 'قیمت به متیک',
-    create: 'ایجاد'
+    create: 'ایجاد',
+    buy: 'خرید'
 })

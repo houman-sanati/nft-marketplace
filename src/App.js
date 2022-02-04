@@ -42,7 +42,7 @@ const App = () => {
           <div className='flex'>
             <h2 className="text-xl font-bold">{Strings.marketName}</h2>
             <div className="grid grid-flow-col gap-4 mr-10">
-              <Link to="/">{Strings.home}</Link>
+              <Link to="/home">{Strings.home}</Link>
               <Link to="/create-item">{Strings.createItem} </Link>
               <Link to="/my-assets">{Strings.myAssets}</Link>
               <Link to="/creator-dashboard">{Strings.dashboard}</Link>
