@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { ethers } from 'ethers'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 
 import AppContext from '../context/AppContext'
@@ -60,9 +60,10 @@ export default function CreateItem() {
         let listingPrice = await marketContractInstance.getListingPrice()
         listingPrice = listingPrice.toString()
 
-        transaction = await marketContractInstance.createMarketItem(tokenId,appContext.nftaddress, price, { value: listingPrice })
-        await transaction.wait()
-        navigate('/home')
+        transaction = await marketContractInstance.createMarketItem(tokenId, appContext.nftaddress, price, { value: listingPrice })
+        transaction.wait().then(() => {
+            navigate('/')
+        })
     }
 
     return (

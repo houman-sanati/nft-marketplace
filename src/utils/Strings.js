@@ -10,5 +10,7 @@ export const Strings = Object.freeze({
     description: 'توضیحات',
     price: 'قیمت به متیک',
     create: 'ایجاد',
-    buy: 'خرید'
+    buy: 'خرید',
+    noItemsFound : 'آیتمی جهت نمایش وجود ندارد',
+    connectYourWalletToContinue: 'جهت ادامه لطفا کیف پول خود را متصل کنید'
 })

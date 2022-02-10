@@ -6,13 +6,17 @@
         url('../public/assets/fonts/Shabnam.ttf') format('truetype');
 }
 
-body{
+body {
     font-family: Shabnam;
     direction: rtl;
 }
 
 .bg-primary {
     background-color: #2A2272;
+}
+
+.border-primary {
+    border-color: #2A2272;
 }
 
 @tailwind base;
