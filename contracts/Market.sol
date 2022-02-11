@@ -15,6 +15,14 @@ contract NFTMarket is ReentrancyGuard {
     address owner;
     uint256 listingPrice = 0.025 ether;
 
+    // listing price is 0.3% of overall price
+    uint8 listingFee = 3;
+
+    modifier minPrice(uint256 price) {
+        require(price >= 1000, "price must be at least 1000 wei");
+        _;
+    }
+
     constructor() {
         owner = msg.sender;
     }
@@ -41,18 +49,22 @@ contract NFTMarket is ReentrancyGuard {
         bool sold
     );
 
-    function getListingPrice() public view returns (uint256) {
-        return listingPrice;
+    function getListingPrice(uint256 price)
+        public
+        view
+        minPrice(price)
+        returns (uint256)
+    {
+        return (price * listingFee) / 1000;
     }
 
     function createMarketItem(
         uint256 tokenId,
         address nftContract,
         uint256 price
-    ) public payable nonReentrant {
-        require(price > 0, "price must be at least 1 wei");
+    ) public payable nonReentrant minPrice(price) {
         require(
-            msg.value == listingPrice,
+            msg.value == getListingPrice(price),
             "Price must be equal to listing price"
         );
 
@@ -87,23 +99,19 @@ contract NFTMarket is ReentrancyGuard {
         payable
         nonReentrant
     {
-        uint price = idToMarketItem[itemId].price;
-        uint tokenId = idToMarketItem[itemId].tokenId;
+        uint256 price = idToMarketItem[itemId].price;
+        uint256 tokenId = idToMarketItem[itemId].tokenId;
         require(
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
         );
 
         idToMarketItem[itemId].seller.transfer(msg.value);
-        IERC721(nftContract).transferFrom(
-            address(this),
-            msg.sender,
-            tokenId
-        );
+        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
         idToMarketItem[itemId].owner = payable(msg.sender);
         idToMarketItem[itemId].sold = true;
         _itemsSold.increment();
-        payable(owner).transfer(listingPrice);
+        payable(owner).transfer(getListingPrice(price));
     }
 
     //return unsold items
