@@ -13,7 +13,6 @@ export default function Home() {
     const appContext = useContext(AppContext)
 
     useEffect(() => {
-        console.log('hi')
         appContext.walletIsConnected && loadMarketItems()
     }, [appContext.walletIsConnected])
 

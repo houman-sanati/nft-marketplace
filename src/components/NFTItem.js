@@ -1,6 +1,6 @@
 import { Strings } from "../utils/Strings";
 
-const NFTItem = ({ index, nft , onBuyClick }) => (
+const NFTItem = ({ index, nft, onBuyClick }) => (
     <div key={index} className="border rounded-xl shadow-md hover:shadow-2xl overflow-hidden">
         <img src={nft.image} />
         <div className="p-4">
@@ -11,7 +11,7 @@ const NFTItem = ({ index, nft , onBuyClick }) => (
         </div>
         <div className="p-4 bg-black">
             <p className="text-xl mb-4 font-bold text-white">{`${nft.price} متیک`}</p>
-            <button className="w-full bg-primary text-white font-bold py-2 px-12 rounded" onClick={() => onBuyClick()}>{Strings.buy}</button>
+            {onBuyClick && <button className="w-full bg-primary text-white font-bold py-2 px-12 rounded" onClick={() => onBuyClick()}>{Strings.buy}</button>}
         </div>
     </div>
 )
