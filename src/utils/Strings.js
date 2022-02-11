@@ -12,5 +12,8 @@ export const Strings = Object.freeze({
     create: 'ایجاد',
     buy: 'خرید',
     noItemsFound : 'آیتمی جهت نمایش وجود ندارد',
-    connectYourWalletToContinue: 'جهت ادامه لطفا کیف پول خود را متصل کنید'
+    connectYourWalletToContinue: 'جهت ادامه لطفا کیف پول خود را متصل کنید',
+    ether:'اتر',
+    listingFee: 'کارمزد',
+    feePercent: '0.3 درصد کارمزد'
 })

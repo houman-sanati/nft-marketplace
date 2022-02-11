@@ -11,6 +11,9 @@ const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
     const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
+
+    const [fee, setFee] = useState('')
+
     const navigate = useNavigate()
     const appContext = useContext(AppContext)
 
@@ -46,7 +49,15 @@ export default function CreateItem() {
         }
     }
 
-    async function createSale(url) {
+    const getListingPrice = async (price) => {
+        if (!price) setFee('')
+        let marketContractInstance = appContext.marketContractInstance
+        const priceInWei = ethers.utils.parseEther(price)
+        const ListingPriceInWei = await marketContractInstance.getListingPrice(priceInWei)
+        return ethers.utils.formatEther(ListingPriceInWei)
+    }
+
+    const createSale = async (url) => {
         let nftContractInstance = appContext.nftContractInstance
         let transaction = await nftContractInstance.createToken(url)
         let tx = await transaction.wait()
@@ -57,8 +68,8 @@ export default function CreateItem() {
         const price = ethers.utils.parseUnits(formInput.price, 'ether')
 
         let marketContractInstance = appContext.marketContractInstance
-        let listingPrice = await marketContractInstance.getListingPrice()
-        listingPrice = listingPrice.toString()
+        const listingPrice = (ethers.utils.parseUnits(fee, 'ether')).toString()
+        console.log(listingPrice)
 
         transaction = await marketContractInstance.createMarketItem(tokenId, appContext.nftaddress, price, { value: listingPrice })
         transaction.wait().then(() => {
@@ -82,8 +93,18 @@ export default function CreateItem() {
                 <input
                     placeholder={Strings.price}
                     className="mt-2 border rounded p-4"
-                    onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+                    onChange={e => {
+                        const value = e.target.value
+                        updateFormInput({ ...formInput, price: value })
+                        getListingPrice(value).then(result => {
+                            setFee(result)
+                        })
+                    }}
                 />
+                <div className='flex justify-between items-center text-sm text-green-600 mt-1'>
+                    {fee && <span>{Strings.listingFee}: {fee} {Strings.ether}</span>}
+                    <span className=''>{Strings.feePercent}</span>
+                </div>
                 <input
                     type="file"
                     name="Asset"
