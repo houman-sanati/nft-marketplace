@@ -8,12 +8,13 @@ export const Strings = Object.freeze({
     connectWallet: 'اتصال کیف پول',
     assetName: 'نام',
     description: 'توضیحات',
-    price: 'قیمت به متیک',
+    price: 'قیمت به اتر',
     create: 'ایجاد',
     buy: 'خرید',
     noItemsFound : 'آیتمی جهت نمایش وجود ندارد',
     connectYourWalletToContinue: 'جهت ادامه لطفا کیف پول خود را متصل کنید',
     ether:'اتر',
     listingFee: 'کارمزد',
-    feePercent: '0.3 درصد کارمزد'
+    feePercent: '0.3 درصد کارمزد',
+    sold: 'فروخته شده'
 })

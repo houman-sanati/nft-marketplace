@@ -56,7 +56,7 @@ export default function Home() {
             <div className="flex">
                 <div>
                     {isLoading ? <Loader /> :
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 mx-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 mx-5">
                             {nfts.map((nft, i) => <NFTItem nft={nft} index={i} onBuyClick={() => buyNft(nft)} />)}
                         </div>
                     }
