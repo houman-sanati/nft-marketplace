@@ -3,17 +3,20 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import AppContext from '../context/AppContext'
 import NFTItem from '../components/NFTItem'
+import { Strings } from '../utils/Strings'
+import ConnectYourWallet from '../components/ConnectYourWallet'
+import Loader from '../components/Loader'
 
 export default function MyAssets() {
     const [nfts, setNfts] = useState([])
-    const [loadingState, setLoadingState] = useState('not-loaded')
+    const [isLoading, setIsLoading] = useState(true)
 
     const appContext = useContext(AppContext)
 
     useEffect(() => {
-        loadNFTs()
-    }, [])
-    
+        appContext.walletIsConnected && loadNFTs()
+    }, [appContext.walletIsConnected])
+
     async function loadNFTs() {
         const marketContractInstance = appContext.marketContractInstance
         const nftContractInstance = appContext.nftContractInstance
@@ -35,17 +38,17 @@ export default function MyAssets() {
             return item
         }))
         setNfts(items)
-        setLoadingState('loaded')
+        setIsLoading(false)
     }
-    if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets owned</h1>)
+    if (!isLoading && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">{Strings.noItemsFound}</h1>)
+    if (!appContext.walletIsConnected) return <ConnectYourWallet />
     return (
         <div className="flex justify-center">
             <div className="p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
-                    {
-                        nfts.map((nft, i) => (<NFTItem nft={nft} index={i} />))
-                    }
-                </div>
+                {isLoading ? <Loader /> :
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+                        {nfts.map((nft, i) => (<NFTItem nft={nft} index={i} />))}
+                    </div>}
             </div>
         </div>
     )

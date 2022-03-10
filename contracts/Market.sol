@@ -13,7 +13,6 @@ contract NFTMarket is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address owner;
-    uint256 listingPrice = 0.025 ether;
 
     // listing price is 0.3% of overall price
     uint8 listingFee = 3;
